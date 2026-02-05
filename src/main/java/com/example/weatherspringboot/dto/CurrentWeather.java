@@ -1,4 +1,4 @@
-package Service.DTO;
+package com.example.weatherspringboot.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

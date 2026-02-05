@@ -1,4 +1,4 @@
-package Service.DTO;
+package com.example.weatherspringboot.dto;
 
 import lombok.Data;
 

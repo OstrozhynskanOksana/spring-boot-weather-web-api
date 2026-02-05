@@ -1,4 +1,4 @@
-package Entity;
+package com.example.weatherspringboot.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -16,10 +16,13 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String name;
+    @Column(unique = true)
+    private String cityName;
     private double latitude;
     private double longitude;
 
     @OneToMany(mappedBy = "currentLocation")
     private List<Users> users;
+
+
 }

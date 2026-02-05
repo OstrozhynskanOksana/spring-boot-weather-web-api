@@ -1,10 +1,10 @@
-package Entity;
+package com.example.weatherspringboot.entity;
 
-import Service.DTO.NotificationRules;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,15 +16,18 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(unique = true)
     private String email;
 
+    @Column(unique = true)
     private String phone;
 
+    @Column(unique = true)
     private String userName;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn (name = "notifications_id")
-    private Notifications notifications;
+    private NotificationsRules notifications;
 
     @ManyToOne
     @JoinColumn (name = "current_location_id")

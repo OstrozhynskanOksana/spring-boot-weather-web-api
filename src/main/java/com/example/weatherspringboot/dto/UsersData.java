@@ -1,6 +1,6 @@
-package Service.DTO;
+package com.example.weatherspringboot.dto;
 
-import Service.ContactType;
+import com.example.weatherspringboot.ContactType;
 import lombok.Data;
 
 @Data

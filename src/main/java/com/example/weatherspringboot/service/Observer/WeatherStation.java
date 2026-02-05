@@ -1,4 +1,4 @@
-package Service.Observer;
+package com.example.weatherspringboot.service.Observer;
 
 import java.util.List;
 

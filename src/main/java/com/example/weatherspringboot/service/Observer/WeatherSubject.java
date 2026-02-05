@@ -1,4 +1,4 @@
-package Service.Observer;
+package com.example.weatherspringboot.service.Observer;
 
 public interface WeatherSubject {
     void addObserver(WeatherObserver observer);

@@ -1,10 +1,9 @@
-package Entity;
+package com.example.weatherspringboot.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.management.Notification;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,7 +11,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @Table(name = "notifications_rules")
-public class Notifications {
+public class NotificationsRules {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -27,7 +26,7 @@ public class Notifications {
 
     private boolean notifySnow;
 
-@OneToMany(mappedBy = "notifications")
+@OneToOne(mappedBy = "notifications")
     private List<Users> users;
 
 

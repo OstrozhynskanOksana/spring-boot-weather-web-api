@@ -1,10 +1,6 @@
-package Controller;
+package com.example.weatherspringboot.controller;
 
-import Service.DTO.CurrentWeather;
-import Service.DTO.WeatherResponse;
-import Service.WeatherService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.example.weatherspringboot.service.WeatherService;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

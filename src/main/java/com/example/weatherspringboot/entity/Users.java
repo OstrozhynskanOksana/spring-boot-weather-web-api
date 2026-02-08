@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -31,7 +30,7 @@ public class Users {
 
     @ManyToOne
     @JoinColumn (name = "current_location_id")
-    private Location currentLocation;
+    private LocationEntity currentLocation;
 
 
 }

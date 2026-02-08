@@ -11,15 +11,15 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @Table(name = "location")
-public class Location {
+public class LocationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(unique = true)
     private String cityName;
-    private double latitude;
-    private double longitude;
+    private Double latitude;
+    private Double longitude;
 
     @OneToMany(mappedBy = "currentLocation")
     private List<Users> users;

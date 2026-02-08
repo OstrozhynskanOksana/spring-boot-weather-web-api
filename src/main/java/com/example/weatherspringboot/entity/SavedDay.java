@@ -18,8 +18,6 @@ public class SavedDay {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private LocalDate date;
-
     private String note;
 
     @ManyToOne(optional = false)

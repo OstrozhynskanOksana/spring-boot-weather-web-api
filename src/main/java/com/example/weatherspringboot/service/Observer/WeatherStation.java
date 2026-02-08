@@ -1,11 +1,21 @@
 package com.example.weatherspringboot.service.Observer;
 
+
+
+import com.example.weatherspringboot.service.WeatherService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
+@RequiredArgsConstructor
 public class WeatherStation implements WeatherSubject {
 
+    private final WeatherService weatherService;
     private List<WeatherObserver> observers;
     private String data;
+
 
     public void setData(String data){
         this.data = data;
@@ -26,6 +36,6 @@ public class WeatherStation implements WeatherSubject {
     public void notifyObservers() {
     for (WeatherObserver observer : observers) {
         observer.updateWeather();
-    }
+      }
     }
 }

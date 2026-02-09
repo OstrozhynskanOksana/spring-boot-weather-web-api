@@ -16,7 +16,7 @@ public class ApiClient {
 
     public LocationData getGeoResponse(String city) {
       GeoResponse geoResponse = restTemplate.getForObject( "https://geocoding-api.open-meteo.com/v1/search?name="+city+"&count=10&format=json", GeoResponse.class);
-        if(geoResponse == null || geoResponse.getResults().isEmpty()){
+        if(geoResponse.getResults() == null || geoResponse.getResults().isEmpty()){
             throw new IllegalArgumentException("Location is not found");
         }
          return geoResponse.getResults().get(0);

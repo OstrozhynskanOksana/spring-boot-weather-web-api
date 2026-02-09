@@ -2,7 +2,7 @@ package com.example.weatherspringboot.service.Observer;
 
 
 
-import com.example.weatherspringboot.service.WeatherService;
+import com.example.weatherspringboot.entity.SavedWeatherDay;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,15 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WeatherStation implements WeatherSubject {
 
-    private final WeatherService weatherService;
-    private List<WeatherObserver> observers;
-    private String data;
-
-
-    public void setData(String data){
-        this.data = data;
-        notifyObservers();
-    }
+    private final List<WeatherObserver> observers;
 
     @Override
     public void addObserver(WeatherObserver observer) {
@@ -33,9 +25,11 @@ public class WeatherStation implements WeatherSubject {
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyObservers(SavedWeatherDay savedWeatherDay) {
     for (WeatherObserver observer : observers) {
-        observer.updateWeather();
+        observer.updateWeather(savedWeatherDay);
       }
     }
+
+
 }

@@ -24,9 +24,9 @@ public class Users {
     @Column(unique = true)
     private String userName;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn (name = "notifications_id")
-    private NotificationsRules notifications;
+    private NotificationRulesEntity notifications;
 
     @ManyToOne
     @JoinColumn (name = "current_location_id")

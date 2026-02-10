@@ -11,7 +11,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @Table(name = "notifications_rules")
-public class NotificationsRules {
+public class NotificationRulesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -24,9 +24,8 @@ public class NotificationsRules {
 
     private boolean notifyRain;
 
-    private boolean notifySnow;
 
-@OneToOne(mappedBy = "notifications")
+@OneToMany(mappedBy = "notifications")
     private List<Users> users;
 
 

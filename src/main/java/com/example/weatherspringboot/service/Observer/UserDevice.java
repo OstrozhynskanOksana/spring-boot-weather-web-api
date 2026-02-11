@@ -3,6 +3,7 @@ package com.example.weatherspringboot.service.Observer;
 
 import com.example.weatherspringboot.entity.SavedWeatherDay;
 import com.example.weatherspringboot.repository.NotificationRulesRepository;
+import com.example.weatherspringboot.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserDevice implements  WeatherObserver {
     private final NotificationRulesRepository notificationRulesRepository;
-    private final WeatherStation weatherStation;
+    private final NotificationService notificationService;
 
     @Override
     public void updateWeather(SavedWeatherDay savedWeatherDay) {
@@ -24,7 +25,7 @@ public class UserDevice implements  WeatherObserver {
               if (savedWeatherDay.getTempMin() < notificationRulesEntity.getMinTemp() ||
                       savedWeatherDay.getTempMax() > notificationRulesEntity.getMaxTemp() ||
                       notificationRulesEntity.isNotifyRain() && savedWeatherDay.getRainSum() > 0.0) {
-                  weatherStation.notifyObservers(savedWeatherDay) ;
+                  notificationService.send(savedWeatherDay);
 
 
               }

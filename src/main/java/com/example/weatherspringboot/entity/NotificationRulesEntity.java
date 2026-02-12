@@ -26,7 +26,7 @@ public class NotificationRulesEntity {
 
 
 @OneToMany(mappedBy = "notifications")
-    private List<Users> users;
+    private List<UsersDataEntity> users;
 
 
 }

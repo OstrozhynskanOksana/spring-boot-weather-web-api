@@ -10,7 +10,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @Table(name = "users_data")
-public class Users {
+public class UsersDataEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -18,11 +18,8 @@ public class Users {
     @Column(unique = true)
     private String email;
 
-    @Column(unique = true)
-    private String phone;
-
-    @Column(unique = true)
-    private String userName;
+    @Column
+    private String password;
 
     @ManyToOne
     @JoinColumn (name = "notifications_id")

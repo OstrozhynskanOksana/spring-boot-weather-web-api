@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +20,7 @@ public class SavedDay {
     private String note;
 
     @ManyToOne(optional = false)
-    private Users user;
+    private UsersDataEntity user;
 
     @ManyToOne(optional = false)
     private SavedWeatherDay weatherDay;

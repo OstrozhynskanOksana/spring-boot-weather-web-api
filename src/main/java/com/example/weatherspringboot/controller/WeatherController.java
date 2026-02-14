@@ -15,7 +15,7 @@ public class WeatherController {
 
     private final WeatherService weatherService;
 
-    @GetMapping
+    @GetMapping("/auth/")
     public WeatherResponse getWeatherByCity(@RequestParam String city) {
     log.info("get weather by city: {}", city);
         return weatherService.getWeatherResponseByCity(city);

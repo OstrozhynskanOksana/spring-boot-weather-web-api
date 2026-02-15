@@ -3,10 +3,10 @@ package com.example.weatherspringboot.service;
 import com.example.weatherspringboot.dto.UsersDataDto;
 import com.example.weatherspringboot.entity.UsersDataEntity;
 import com.example.weatherspringboot.repository.UsersDataRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @Service
 @RequiredArgsConstructor

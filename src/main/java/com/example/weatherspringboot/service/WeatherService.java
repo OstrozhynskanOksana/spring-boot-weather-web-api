@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
@@ -32,6 +33,7 @@ public class WeatherService {
  }
 
 @Scheduled(cron = "0 */15 * * * *")
+@Transactional
  public void updatedDataForWeather(){
   locationRepository.findAll().forEach(location -> {
    WeatherResponse weatherResponseData = apiClient.getWeatherResponse(

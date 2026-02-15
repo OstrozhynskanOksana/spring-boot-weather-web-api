@@ -15,10 +15,10 @@ public class UsersDataEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false, length = 30)
     private String email;
 
-    @Column
+    @Column(nullable = false,length = 30)
     private String password;
 
     @ManyToOne

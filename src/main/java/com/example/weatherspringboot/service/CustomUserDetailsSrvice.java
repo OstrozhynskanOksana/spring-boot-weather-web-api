@@ -2,6 +2,7 @@ package com.example.weatherspringboot.service;
 import com.example.weatherspringboot.entity.UsersDataEntity;
 import com.example.weatherspringboot.repository.UsersDataRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,12 +15,13 @@ import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CustomUserDetailsSrvice implements UserDetailsService {
     private final UsersDataRepository usersDataRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        UsersDataEntity entity = usersDataRepository.findByEmail(username);
-        System.out.println("Loading user: " + username);
+        log.info("Loading user: {}", username);
         if (entity == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }

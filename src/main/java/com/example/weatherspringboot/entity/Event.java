@@ -20,6 +20,7 @@ public class Event {
     @ManyToOne(optional = false)
     private SavedDay savedDay;
 
+    @Column(length = 30)
     private String title;
 
     private String description;

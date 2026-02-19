@@ -5,22 +5,20 @@ import com.example.weatherspringboot.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@RequestMapping("/auth")
 public class AuthController {
 
     private final AuthService authService;
 
 
-    @PostMapping("/auth/register")
+    @PostMapping("/signup")
     public void saveDataRegistration(@Valid @RequestBody UsersDataDto usersData){
-        log.info("User is registered with email: " + usersData.getEmail());
+        log.info("User is registered with email: {}", usersData.getEmail());
         authService.saveUserData(usersData);
 
 

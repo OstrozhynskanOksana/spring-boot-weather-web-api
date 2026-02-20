@@ -14,6 +14,7 @@ public class AuthService {
 
     private final UsersDataRepository usersDataRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserService userService;
 
 
     public void saveUserData(UsersDataDto usersData){
@@ -21,7 +22,7 @@ public class AuthService {
         users.setEmail(usersData.getEmail());
         String encodedPassword = passwordEncoder.encode(usersData.getPassword());
         users.setPassword(encodedPassword);
-        usersDataRepository.save(users);
+        userService.save(users);
 
     }
 

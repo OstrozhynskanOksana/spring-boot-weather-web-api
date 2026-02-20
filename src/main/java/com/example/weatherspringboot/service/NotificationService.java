@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class NotificationService {
 
-    private final SavedWeatherDayRepository savedWeatherDayRepository;
-
     public void send(SavedWeatherDay savedWeatherDay) {
 
        Double rain = savedWeatherDay.getRainSum();

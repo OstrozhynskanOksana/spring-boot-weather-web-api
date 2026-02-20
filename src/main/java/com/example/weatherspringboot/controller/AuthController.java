@@ -5,19 +5,15 @@ import com.example.weatherspringboot.dto.UsersDataDto;
 import com.example.weatherspringboot.service.AuthService;
 import com.example.weatherspringboot.service.CustomUserDetails;
 import com.example.weatherspringboot.service.JwtService;
-import com.example.weatherspringboot.service.UserDetailsImpService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
 
 @RestController
 @Slf4j

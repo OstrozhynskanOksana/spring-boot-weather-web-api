@@ -26,7 +26,7 @@ public class UserDetailsImpService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
 
-        return new User(entity.getEmail(), entity.getPassword(), Collections.emptyList());
+        return new CustomUserDetails(entity);
 
     }
 }

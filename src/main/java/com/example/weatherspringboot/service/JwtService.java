@@ -25,7 +25,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
-    private String generateJwtToken(String email) {
+    public String generateJwtToken(String email) {
         return  Jwts.builder()
                 .setSubject(email)
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))

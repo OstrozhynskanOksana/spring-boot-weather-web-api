@@ -4,24 +4,22 @@ import com.example.weatherspringboot.entity.UsersDataEntity;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
 
-@Component
-@RequiredArgsConstructor
-public class CustomUserDetails implements UserDetails {
-    private final UsersDataEntity user;
 
-    public UsersDataEntity getUser() {
-        return user;
-    }
+public record CustomUserDetails(UsersDataEntity user) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority("ROLE_"+user.getRole().name()));
+    }
+
+    public String getRole(){
+        return user.getRole().name();
     }
 
     @Override

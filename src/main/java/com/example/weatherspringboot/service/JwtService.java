@@ -1,17 +1,13 @@
 package com.example.weatherspringboot.service;
 
-import com.example.weatherspringboot.dto.JwtAuthenticationDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 @Service
@@ -25,11 +21,12 @@ public class JwtService {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
-    public String generateJwtToken(String email) {
+    public String generateJwtToken(String email, String role) {
         return  Jwts.builder()
                 .setSubject(email)
+                .claim("role", role)
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
-                .signWith(getSecretKey(), SignatureAlgorithm.HS512)
+                .signWith(getSecretKey(), SignatureAlgorithm.HS256)
 
                 //збираємо токен в строку
                 .compact();

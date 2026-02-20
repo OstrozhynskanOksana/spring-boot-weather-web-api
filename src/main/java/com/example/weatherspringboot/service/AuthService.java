@@ -1,5 +1,6 @@
 package com.example.weatherspringboot.service;
 
+import com.example.weatherspringboot.Role;
 import com.example.weatherspringboot.dto.UsersDataDto;
 import com.example.weatherspringboot.entity.UsersDataEntity;
 import com.example.weatherspringboot.repository.UsersDataRepository;
@@ -22,6 +23,7 @@ public class AuthService {
         users.setEmail(usersData.getEmail());
         String encodedPassword = passwordEncoder.encode(usersData.getPassword());
         users.setPassword(encodedPassword);
+        users.setRole(Role.USER);
         userService.save(users);
 
     }

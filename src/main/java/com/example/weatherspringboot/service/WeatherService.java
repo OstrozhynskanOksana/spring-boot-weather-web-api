@@ -10,6 +10,7 @@ import com.example.weatherspringboot.repository.SavedWeatherDayRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +25,6 @@ public class WeatherService {
  private final ApiClient apiClient;
  private final LocationRepository locationRepository;
  private final SavedWeatherDayRepository savedWeatherDayRepository;
-
 
  public WeatherResponse getWeatherResponseByCity(String city) {
   LocationData dataGeoResponse = apiClient.getGeoResponse(city);

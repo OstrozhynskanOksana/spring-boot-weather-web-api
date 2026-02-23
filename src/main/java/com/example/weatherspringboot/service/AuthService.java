@@ -4,7 +4,6 @@ import com.example.weatherspringboot.Role;
 import com.example.weatherspringboot.dto.UsersDataDto;
 import com.example.weatherspringboot.entity.UsersDataEntity;
 import com.example.weatherspringboot.repository.UsersDataRepository;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,6 @@ public class AuthService {
         userService.save(users);
 
     }
-
 
 
 }

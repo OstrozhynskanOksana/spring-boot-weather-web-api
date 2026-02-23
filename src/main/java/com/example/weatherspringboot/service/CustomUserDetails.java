@@ -1,7 +1,8 @@
 package com.example.weatherspringboot.service;
 
 import com.example.weatherspringboot.entity.UsersDataEntity;
-import lombok.RequiredArgsConstructor;
+
+
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

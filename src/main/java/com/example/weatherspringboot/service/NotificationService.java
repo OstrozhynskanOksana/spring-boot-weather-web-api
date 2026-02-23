@@ -1,7 +1,6 @@
 package com.example.weatherspringboot.service;
 
 import com.example.weatherspringboot.entity.SavedWeatherDay;
-import com.example.weatherspringboot.repository.SavedWeatherDayRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

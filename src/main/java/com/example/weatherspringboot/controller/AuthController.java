@@ -45,7 +45,7 @@ public class AuthController {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         String token = jwtService.generateJwtToken(userDetails.getUsername(),
                 userDetails.getRole());
-        return  ResponseEntity.ok().body(token);
+        return  ResponseEntity.ok().build();
     }
 
 

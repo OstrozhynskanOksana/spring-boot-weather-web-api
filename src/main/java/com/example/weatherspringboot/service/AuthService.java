@@ -4,7 +4,6 @@ import com.example.weatherspringboot.Role;
 import com.example.weatherspringboot.dto.LoginRequestDto;
 import com.example.weatherspringboot.dto.UsersDataDto;
 import com.example.weatherspringboot.entity.UsersDataEntity;
-import com.example.weatherspringboot.repository.UsersDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,8 +24,8 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
-
-    public void saveUserData(UsersDataDto usersData){
+    @Transactional
+    public String saveUserData(UsersDataDto usersData) {
         var users = new UsersDataEntity();
         users.setEmail(usersData.getEmail());
         String encodedPassword = passwordEncoder.encode(usersData.getPassword());
@@ -33,9 +33,16 @@ public class AuthService {
         users.setRole(Role.USER);
         userService.save(users);
 
+        var userDetails = new CustomUserDetails(users);
+        List<String> roles = userDetails.getAuthorities().stream().map(
+                GrantedAuthority::getAuthority).toList();
+        return jwtService
+                .generateJwtToken(users.getEmail(),
+                        roles);
+
     }
 
-    public String loginUser(LoginRequestDto loginRequest){
+    public String loginUser(LoginRequestDto loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getEmail(),
@@ -48,7 +55,7 @@ public class AuthService {
 
         return jwtService
                 .generateJwtToken(userDetails.getUsername(),
-                roles);
+                        roles);
 
     }
 

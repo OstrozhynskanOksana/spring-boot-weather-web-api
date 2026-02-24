@@ -16,7 +16,6 @@ public class LocationEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(unique = true)
     private String cityName;
     private Double latitude;
     private Double longitude;

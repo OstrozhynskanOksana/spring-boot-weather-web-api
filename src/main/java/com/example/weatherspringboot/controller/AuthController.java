@@ -1,17 +1,13 @@
 package com.example.weatherspringboot.controller;
 
 import com.example.weatherspringboot.dto.LoginRequestDto;
+import com.example.weatherspringboot.dto.AuthResponseDto;
 import com.example.weatherspringboot.dto.UsersDataDto;
 import com.example.weatherspringboot.service.AuthService;
-import com.example.weatherspringboot.service.CustomUserDetails;
-import com.example.weatherspringboot.service.JwtService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -24,19 +20,19 @@ public class AuthController {
     private final AuthService authService;
 
 
-
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@Valid @RequestBody UsersDataDto usersData){
+    public ResponseEntity<AuthResponseDto> signup(@Valid @RequestBody UsersDataDto usersData) {
         log.info("User is registered with email: {}", usersData.getEmail());
-        authService.saveUserData(usersData);
-        return ResponseEntity.ok().build();
+        String token = authService.saveUserData(usersData);
+        return ResponseEntity.ok(new AuthResponseDto(token));
 
 
     }
+
     @PostMapping("/signin")
-    public ResponseEntity<?> signin(@Valid @RequestBody LoginRequestDto loginRequest){
-      authService.loginUser(loginRequest);
-        return  ResponseEntity.ok().build();
+    public ResponseEntity<AuthResponseDto> signin(@Valid @RequestBody LoginRequestDto loginRequest) {
+        String token = authService.loginUser(loginRequest);
+        return ResponseEntity.ok(new AuthResponseDto(token));
     }
 
 

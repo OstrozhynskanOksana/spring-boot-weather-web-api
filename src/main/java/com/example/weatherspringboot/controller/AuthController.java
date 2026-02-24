@@ -22,8 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
-    private final AuthenticationManager authenticationManager;
-    private final JwtService jwtService;
+
 
 
     @PostMapping("/signup")
@@ -36,15 +35,7 @@ public class AuthController {
     }
     @PostMapping("/signin")
     public ResponseEntity<?> signin(@Valid @RequestBody LoginRequestDto loginRequest){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getEmail(),
-                        loginRequest.getPassword()
-                )
-        );
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        String token = jwtService.generateJwtToken(userDetails.getUsername(),
-                userDetails.getRole());
+      authService.loginUser(loginRequest);
         return  ResponseEntity.ok().build();
     }
 

@@ -16,9 +16,9 @@ public class UserDetailsImpService implements UserDetailsService {
     private final UserService userService;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       UsersDataEntity entity = userService.findByEmail(username);
-        log.info("Loading user: {}", username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+       UsersDataEntity entity = userService.findByEmail(email);
+        log.info("Loading user: {}", email);
 
         return new CustomUserDetails(entity);
 

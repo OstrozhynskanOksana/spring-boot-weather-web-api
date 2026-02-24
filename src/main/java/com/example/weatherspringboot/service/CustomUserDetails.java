@@ -16,11 +16,7 @@ public record CustomUserDetails(UsersDataEntity user) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_"+user.getRole().name()));
-    }
-
-    public String getRole(){
-        return user.getRole().name();
+        return List.of(new SimpleGrantedAuthority("ROLE_"+ user.getRole().name()));
     }
 
     @Override

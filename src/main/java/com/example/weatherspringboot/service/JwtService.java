@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -16,22 +17,26 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
+    @Value("${jwt.expitarion}")
+    private Integer jwtExpiration;
+
     private Key getSecretKey() {
         //hmacShaKeyFor створює криптографічний ключ для hmac алгоритмів із байтів
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
-    public String generateJwtToken(String email, String role) {
-        return  Jwts.builder()
+    public String generateJwtToken(String email, List<String> roles) {
+        return Jwts.builder()
                 .setSubject(email)
-                .claim("role", role)
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .claim("role", roles)
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration * 1000 * 60))
                 .signWith(getSecretKey(), SignatureAlgorithm.HS256)
 
                 //збираємо токен в строку
                 .compact();
     }
-    public String getEmailFromToken(String token){
+
+    public String getEmailFromToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSecretKey())
                 .build()
@@ -42,24 +47,20 @@ public class JwtService {
                 .getSubject();
     }
 
-    public boolean isValid(String token){
-        try{
+    public boolean isValid(String token) {
+        try {
             Jwts.parserBuilder()
                     .setSigningKey(getSecretKey())
                     .build()
                     .parseClaimsJws(token);
             return true;
-        }
-        catch (ExpiredJwtException expiredJwtException){
-           log.error("Expired token", expiredJwtException);
-        }
-        catch (MalformedJwtException malformedJwtException){
+        } catch (ExpiredJwtException expiredJwtException) {
+            log.error("Expired token", expiredJwtException);
+        } catch (MalformedJwtException malformedJwtException) {
             log.error("Malformed token", malformedJwtException);
-        }
-        catch (SecurityException securityException){
+        } catch (SecurityException securityException) {
             log.error("Invalid signature", securityException);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             log.error("Token validation error", e);
         }
         return false;

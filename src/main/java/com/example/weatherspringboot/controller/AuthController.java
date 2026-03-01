@@ -4,6 +4,7 @@ import com.example.weatherspringboot.dto.LoginRequestDto;
 import com.example.weatherspringboot.dto.AuthResponseDto;
 import com.example.weatherspringboot.dto.UsersDataDto;
 import com.example.weatherspringboot.service.AuthService;
+import com.example.weatherspringboot.service.EmailAlreadyExistsException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +26,6 @@ public class AuthController {
         log.info("User is registered with email: {}", usersData.getEmail());
         String token = authService.saveUserData(usersData);
         return ResponseEntity.ok(new AuthResponseDto(token));
-
-
     }
 
     @PostMapping("/signin")

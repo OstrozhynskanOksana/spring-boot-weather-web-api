@@ -21,7 +21,6 @@ public class JwtService {
     private Integer jwtExpiration;
 
     private Key getSecretKey() {
-        //hmacShaKeyFor створює криптографічний ключ для hmac алгоритмів із байтів
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
@@ -31,8 +30,6 @@ public class JwtService {
                 .claim("role", roles)
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration * 1000 * 60))
                 .signWith(getSecretKey(), SignatureAlgorithm.HS256)
-
-                //збираємо токен в строку
                 .compact();
     }
 

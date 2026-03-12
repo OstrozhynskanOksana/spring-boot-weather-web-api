@@ -2,7 +2,7 @@ package com.example.weatherspringboot.service.Observer;
 
 
 
-import com.example.weatherspringboot.entity.SavedWeatherDay;
+import com.example.weatherspringboot.entity.SavedDailyWeatherEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -25,9 +25,9 @@ public class WeatherStation implements WeatherSubject {
     }
 
     @Override
-    public void notifyObservers(SavedWeatherDay savedWeatherDay) {
+    public void notifyObservers(SavedDailyWeatherEntity savedDailyWeatherEntity) {
     for (WeatherObserver observer : observers) {
-        observer.updateWeather(savedWeatherDay);
+        observer.updateWeather(savedDailyWeatherEntity);
       }
     }
 

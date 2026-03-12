@@ -1,5 +1,5 @@
 package com.example.weatherspringboot.service;
-import com.example.weatherspringboot.entity.UsersDataEntity;
+import com.example.weatherspringboot.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +17,7 @@ public class UserDetailsImpService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-       UsersDataEntity entity = userService.findByEmail(email);
+       UserEntity entity = userService.findByEmail(email);
         log.info("Loading user: {}", email);
 
         return new CustomUserDetails(entity);

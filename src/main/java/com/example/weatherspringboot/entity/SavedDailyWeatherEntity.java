@@ -11,7 +11,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table
-public class SavedWeatherDay {
+public class SavedDailyWeatherEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

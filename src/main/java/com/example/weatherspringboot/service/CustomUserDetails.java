@@ -1,6 +1,6 @@
 package com.example.weatherspringboot.service;
 
-import com.example.weatherspringboot.entity.UsersDataEntity;
+import com.example.weatherspringboot.entity.UserEntity;
 
 
 import org.jspecify.annotations.Nullable;
@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 
-public record CustomUserDetails(UsersDataEntity user) implements UserDetails {
+public record CustomUserDetails(UserEntity user) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

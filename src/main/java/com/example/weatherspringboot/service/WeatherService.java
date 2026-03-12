@@ -1,12 +1,12 @@
 package com.example.weatherspringboot.service;
 
 import com.example.weatherspringboot.config.ApiClient;
-import com.example.weatherspringboot.dto.DailyWeather;
-import com.example.weatherspringboot.dto.LocationData;
-import com.example.weatherspringboot.dto.WeatherResponse;
-import com.example.weatherspringboot.entity.SavedWeatherDay;
+import com.example.weatherspringboot.dto.DailyWeatherDto;
+import com.example.weatherspringboot.dto.LocationDto;
+import com.example.weatherspringboot.dto.WeatherResponseDto;
+import com.example.weatherspringboot.entity.SavedDailyWeatherEntity;
 import com.example.weatherspringboot.repository.LocationRepository;
-import com.example.weatherspringboot.repository.SavedWeatherDayRepository;
+import com.example.weatherspringboot.repository.SavedDailyWeatherRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,10 +23,10 @@ public class WeatherService {
 
  private final ApiClient apiClient;
  private final LocationRepository locationRepository;
- private final SavedWeatherDayRepository savedWeatherDayRepository;
+ private final SavedDailyWeatherRepository savedDailyWeatherRepository;
 
- public WeatherResponse getWeatherResponseByCity(String city) {
-  LocationData dataGeoResponse = apiClient.getGeoResponse(city);
+ public WeatherResponseDto getWeatherResponseByCity(String city) {
+  LocationDto dataGeoResponse = apiClient.getGeoResponse(city);
      return apiClient.getWeatherResponse(dataGeoResponse.getLatitude(), dataGeoResponse.getLongitude());
 
  }
@@ -35,19 +35,19 @@ public class WeatherService {
 @Transactional
  public void updatedDataForWeather(){
   locationRepository.findAll().forEach(location -> {
-   WeatherResponse weatherResponseData = apiClient.getWeatherResponse(
+   WeatherResponseDto weatherResponseDtoData = apiClient.getWeatherResponse(
            location.getLatitude(),
            location.getLongitude()
    );
-   DailyWeather daily = weatherResponseData.getDaily();
+   DailyWeatherDto daily = weatherResponseDtoData.getDaily();
    if (daily.getTime() == null || daily.getTime().isEmpty()) {
     return;
    }
    LocalDate date = LocalDate.parse(daily.getTime().getFirst());
-   if(savedWeatherDayRepository.existsSavedWeatherDayBy(location, date)){
+   if(savedDailyWeatherRepository.existsSavedWeatherDayBy(location, date)){
     return;
    }
-   SavedWeatherDay entity = new SavedWeatherDay();
+   SavedDailyWeatherEntity entity = new SavedDailyWeatherEntity();
    entity.setWeatherCodes(daily.getWeatherCodes().getFirst());
    entity.setTempMax(daily.getTempMax().getFirst());
    entity.setTempMin(daily.getTempMin().getFirst());
@@ -55,7 +55,7 @@ public class WeatherService {
    entity.setSunset(daily.getSunset().getFirst());
    entity.setUvMax(daily.getUvMax().getFirst());
    entity.setRainSum(daily.getRainSum().getFirst());
-   savedWeatherDayRepository.save(entity);
+   savedDailyWeatherRepository.save(entity);
 
   });
 

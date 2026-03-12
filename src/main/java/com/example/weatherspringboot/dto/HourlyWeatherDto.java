@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class HourlyWeather {
+public class HourlyWeatherDto {
     private List<String> time;
     @JsonProperty("temperature_2m")
     private List<Double> temperatures;

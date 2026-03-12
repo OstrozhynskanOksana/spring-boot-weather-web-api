@@ -3,7 +3,6 @@ package com.example.weatherspringboot.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.User;
 
 import java.util.UUID;
 
@@ -11,14 +10,14 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @Table(name = "event")
-public class Event {
+public class EventEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
 
     @ManyToOne(optional = false)
-    private SavedDay savedDay;
+    private SavedDayEntity savedDayEntity;
 
     @Column(length = 30)
     private String title;

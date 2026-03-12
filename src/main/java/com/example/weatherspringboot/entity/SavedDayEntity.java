@@ -11,7 +11,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @Table(name = "saved_day")
-public class SavedDay {
+public class SavedDayEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -20,11 +20,11 @@ public class SavedDay {
     private String note;
 
     @ManyToOne(optional = false)
-    private UsersDataEntity user;
+    private UserEntity user;
 
     @ManyToOne(optional = false)
-    private SavedWeatherDay weatherDay;
+    private SavedDailyWeatherEntity weatherDay;
 
     @OneToMany(mappedBy = "savedDay",  cascade = CascadeType.ALL,  orphanRemoval = true)
-    private List<Event> event;
+    private List<EventEntity> eventEntity;
 }

@@ -3,7 +3,7 @@ package com.example.weatherspringboot.dto;
 import lombok.Data;
 
 @Data
-public class LocationData {
+public class LocationDto {
     private Double latitude;
     private Double longitude;
 

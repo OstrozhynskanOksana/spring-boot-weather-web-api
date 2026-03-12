@@ -1,6 +1,6 @@
 package com.example.weatherspringboot.controller;
 
-import com.example.weatherspringboot.dto.WeatherResponse;
+import com.example.weatherspringboot.dto.WeatherResponseDto;
 import com.example.weatherspringboot.service.WeatherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ public class WeatherController {
     private final WeatherService weatherService;
 
     @GetMapping("/weather")
-    public WeatherResponse getWeatherByCity(@RequestParam String city) {
+    public WeatherResponseDto getWeatherByCity(@RequestParam String city) {
     log.info("get weather by city: {}", city);
         return weatherService.getWeatherResponseByCity(city);
 

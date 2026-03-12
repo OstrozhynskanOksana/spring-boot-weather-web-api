@@ -21,7 +21,7 @@ public class LocationEntity {
     private Double longitude;
 
     @OneToMany(mappedBy = "currentLocation")
-    private List<UsersDataEntity> users;
+    private List<UserEntity> users;
 
 
 }

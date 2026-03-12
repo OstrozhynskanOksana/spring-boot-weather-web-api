@@ -5,6 +5,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class GeoResponse {
-    private List<LocationData> results;
+public class GeoResponseDto {
+    private List<LocationDto> results;
 }

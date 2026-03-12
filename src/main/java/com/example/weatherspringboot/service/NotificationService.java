@@ -1,6 +1,6 @@
 package com.example.weatherspringboot.service;
 
-import com.example.weatherspringboot.entity.SavedWeatherDay;
+import com.example.weatherspringboot.entity.SavedDailyWeatherEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class NotificationService {
 
-    public void send(SavedWeatherDay savedWeatherDay) {
+    public void send(SavedDailyWeatherEntity savedDailyWeatherEntity) {
 
-       Double rain = savedWeatherDay.getRainSum();
+       Double rain = savedDailyWeatherEntity.getRainSum();
             String message = "";
             if (rain >= 0.0 && rain < 0.3) {
             message = "no rain";
@@ -23,8 +23,8 @@ public class NotificationService {
             }else if (rain >= 5.0 && rain < 15.0) {
                 message = "pouring rain";
             }
-            System.out.println("The weather has changed: min temperature - " + savedWeatherDay.getTempMin() +
-                    ", max temperature - " + savedWeatherDay.getTempMax() + ", rain: " + message);
+            System.out.println("The weather has changed: min temperature - " + savedDailyWeatherEntity.getTempMin() +
+                    ", max temperature - " + savedDailyWeatherEntity.getTempMax() + ", rain: " + message);
 
 
     }

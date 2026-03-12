@@ -2,7 +2,7 @@ package com.example.weatherspringboot.service;
 
 import com.example.weatherspringboot.dto.LoginRequestDto;
 import com.example.weatherspringboot.dto.UsersDataDto;
-import com.example.weatherspringboot.entity.UsersDataEntity;
+import com.example.weatherspringboot.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +23,7 @@ public class AuthService {
     private final JwtService jwtService;
 
     public String saveUserData(UsersDataDto usersData) {
-        UsersDataEntity user = userService.register(usersData);
+        UserEntity user = userService.register(usersData);
         List<String> roles = List.of(user.getRole().name());
         return jwtService.generateJwtToken(usersData.getEmail(), roles);
     }

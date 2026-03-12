@@ -2,7 +2,7 @@ package com.example.weatherspringboot.service;
 
 import com.example.weatherspringboot.Role;
 import com.example.weatherspringboot.dto.UsersDataDto;
-import com.example.weatherspringboot.entity.UsersDataEntity;
+import com.example.weatherspringboot.entity.UserEntity;
 import com.example.weatherspringboot.repository.UsersDataRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ public class UserService {
     private final UsersDataRepository usersDataRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UsersDataEntity findByEmail(String email) {
+    public UserEntity findByEmail(String email) {
         return usersDataRepository.findByEmail(email)
                 .orElseThrow(() ->
                         new UsernameNotFoundException(
@@ -29,9 +29,9 @@ public class UserService {
     }
 
 
-    public UsersDataEntity register(UsersDataDto usersData) {
+    public UserEntity register(UsersDataDto usersData) {
         try {
-            var users = new UsersDataEntity();
+            var users = new UserEntity();
             users.setEmail(usersData.getEmail());
             String encodedPassword = passwordEncoder.encode(usersData.getPassword());
             users.setPassword(encodedPassword);

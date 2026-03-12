@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class CurrentWeather {
+public class CurrentWeatherDto {
     private String time;
     private Integer interval; //інтервал наступного запиту
     @JsonProperty("temperature_2m")

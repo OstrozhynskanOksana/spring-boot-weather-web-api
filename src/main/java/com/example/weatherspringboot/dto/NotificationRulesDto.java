@@ -3,7 +3,7 @@ package com.example.weatherspringboot.dto;
 import lombok.Data;
 
 @Data
-public class NotificationRules {
+public class NotificationRulesDto {
     private Double minTemp;
     private Double maxTemp;
     private boolean notifyRain;

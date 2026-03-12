@@ -3,11 +3,11 @@ package com.example.weatherspringboot.dto;
 import lombok.Data;
 
 @Data
-public class WeatherResponse {
+public class WeatherResponseDto {
     private double latitude;
     private double longitude;
     private String timezone;
-    private CurrentWeather current;
-    private HourlyWeather hourly;
-    private DailyWeather daily;
+    private CurrentWeatherDto current;
+    private HourlyWeatherDto hourly;
+    private DailyWeatherDto daily;
 }

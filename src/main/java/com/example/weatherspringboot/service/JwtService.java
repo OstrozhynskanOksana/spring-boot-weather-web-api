@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
+import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.List;
 
@@ -18,38 +18,38 @@ public class JwtService {
     private String jwtSecret;
 
     @Value("${jwt.expiration}")
-    private Integer jwtExpiration;
+    private Long jwtExpiration;
 
-    private Key getSecretKey() {
+    private SecretKey getSecretKey() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
     public String generateJwtToken(String email, List<String> roles) {
         return Jwts.builder()
-                .setSubject(email)
+                .subject(email)
                 .claim("role", roles)
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration * 1000 * 60))
-                .signWith(getSecretKey(), SignatureAlgorithm.HS256)
+                .expiration(new Date(System.currentTimeMillis() + jwtExpiration * 1000 * 60))
+                .signWith(getSecretKey())
                 .compact();
     }
 
     public String getEmailFromToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSecretKey())
+        return Jwts.parser()
+                .verifyWith(getSecretKey())
                 .build()
 
                 //HEADER.PAYLOAD(email..).SIGNATURE
-                .parseClaimsJws(token)
-                .getBody()
+                .parseSignedClaims(token)
+                .getPayload()
                 .getSubject();
     }
 
     public boolean isValid(String token) {
         try {
-            Jwts.parserBuilder()
-                    .setSigningKey(getSecretKey())
+            Jwts.parser()
+                    .verifyWith(getSecretKey())
                     .build()
-                    .parseClaimsJws(token);
+                    .parseSignedClaims(token);
             return true;
         } catch (ExpiredJwtException expiredJwtException) {
             log.error("Expired token", expiredJwtException);

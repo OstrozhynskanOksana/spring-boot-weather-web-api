@@ -25,6 +25,6 @@ public class SavedDayEntity {
     @ManyToOne(optional = false)
     private SavedDailyWeatherEntity weatherDay;
 
-    @OneToMany(mappedBy = "savedDay",  cascade = CascadeType.ALL,  orphanRemoval = true)
+    @OneToMany(mappedBy = "savedDayEntity",  cascade = CascadeType.ALL,  orphanRemoval = true)
     private List<EventEntity> eventEntity;
 }

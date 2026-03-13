@@ -1,6 +1,7 @@
 package com.example.weatherspringboot.service;
 
 import com.example.weatherspringboot.entity.SavedDailyWeatherEntity;
+import com.example.weatherspringboot.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class NotificationService {
 
-    public void send(SavedDailyWeatherEntity savedDailyWeatherEntity) {
+    public void send(UserEntity user, SavedDailyWeatherEntity savedDailyWeatherEntity) {
 
        Double rain = savedDailyWeatherEntity.getRainSum();
             String message = "";

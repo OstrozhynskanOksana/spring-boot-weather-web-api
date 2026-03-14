@@ -28,8 +28,6 @@ public class NotificationRulesEntity {
     private boolean notifyRain;
 
 
-@OneToMany(mappedBy = "notifications")
+    @OneToMany(mappedBy = "notifications")
     private List<UserEntity> users;
-
-
 }

@@ -21,15 +21,15 @@ public class AuthController {
     private final AuthService authService;
 
 
-    @PostMapping("/signup")
-    public ResponseEntity<AuthResponseDto> signup(@Valid @RequestBody UsersDataDto usersData) {
+    @PostMapping("/sign-up")
+    public ResponseEntity<AuthResponseDto> signUp(@Valid @RequestBody UsersDataDto usersData) {
         log.info("User is registered with email: {}", usersData.getEmail());
-        String token = authService.saveUserData(usersData);
+        String token = authService.register(usersData);
         return ResponseEntity.ok(new AuthResponseDto(token));
     }
 
-    @PostMapping("/signin")
-    public ResponseEntity<AuthResponseDto> signin(@Valid @RequestBody LoginRequestDto loginRequest) {
+    @PostMapping("/sign-in")
+    public ResponseEntity<AuthResponseDto> signIn(@Valid @RequestBody LoginRequestDto loginRequest) {
         String token = authService.loginUser(loginRequest);
         return ResponseEntity.ok(new AuthResponseDto(token));
     }

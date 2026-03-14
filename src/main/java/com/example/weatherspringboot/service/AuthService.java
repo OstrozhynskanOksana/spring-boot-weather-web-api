@@ -16,13 +16,12 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-
-
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
-    public String saveUserData(UsersDataDto usersData) {
+
+    public String register(UsersDataDto usersData) {
         UserEntity user = userService.register(usersData);
         List<String> roles = List.of(user.getRole().name());
         return jwtService.generateJwtToken(usersData.getEmail(), roles);
@@ -36,9 +35,10 @@ public class AuthService {
                 )
         );
         return jwtService
-                .generateJwtToken(authentication.getName(),
-                        authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList());
-
+                .generateJwtToken(
+                        authentication.getName(),
+                        authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList()
+                );
     }
 
 

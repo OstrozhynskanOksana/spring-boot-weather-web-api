@@ -32,7 +32,6 @@ public class UserService {
         return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(String.format("User is not found: %s", email)));
     }
 
-
     public UserEntity register(UsersDataDto usersData) {
         try {
             var users = new UserEntity();
@@ -42,7 +41,6 @@ public class UserService {
             users.setRole(Role.USER);
 
             return userRepository.save(users);
-
         } catch (DataIntegrityViolationException ex) {
             log.warn("Attempt to register duplicate email: {}", usersData.getEmail());
             throw new EmailAlreadyExistsException("The email is already in use");

@@ -28,12 +28,10 @@ public class UserEntity {
     private Role role;
 
     @ManyToOne
-    @JoinColumn (name = "notifications_id")
+    @JoinColumn(name = "notifications_id")
     private NotificationRulesEntity notifications;
 
     @ManyToOne
     @JoinColumn (name = "current_location_id")
     private LocationEntity currentLocation;
-
-
 }

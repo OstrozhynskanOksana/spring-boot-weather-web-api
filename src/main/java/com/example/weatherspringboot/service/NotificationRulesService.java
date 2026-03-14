@@ -32,7 +32,6 @@ public class NotificationRulesService {
 
         UserEntity user = userService.findById(id);
         user.setNotifications(rule);
-        userService.saveUser(user);
         return rule;
     }
 }

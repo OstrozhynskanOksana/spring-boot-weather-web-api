@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/notifications")
+@RequestMapping("/notification-rules")
 @RequiredArgsConstructor
 public class NotificationController {
 
     private final NotificationRulesService notificationRulesService;
 
 
-    @PostMapping("/set")
+    @PostMapping
     public ResponseEntity<NotificationRulesEntity> addNotificationRules(@RequestBody NotificationRulesDto request) {
        NotificationRulesEntity savedRules = notificationRulesService.setRules(
                request.getId(),

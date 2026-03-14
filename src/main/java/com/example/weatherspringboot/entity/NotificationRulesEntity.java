@@ -22,6 +22,7 @@ public class NotificationRulesEntity {
     @Column(name = "max_temperature")
     private Double maxTemp;
 
+    @Column(name = "notify_rain")
     private boolean notifyRain;
 
 

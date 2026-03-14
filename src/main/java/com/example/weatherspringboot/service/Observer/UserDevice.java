@@ -2,10 +2,12 @@ package com.example.weatherspringboot.service.Observer;
 
 
 import com.example.weatherspringboot.entity.SavedDailyWeatherEntity;
-import com.example.weatherspringboot.repository.NotificationRulesRepository;
 import com.example.weatherspringboot.service.NotificationRulesService;
 import com.example.weatherspringboot.service.NotificationService;
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.stereotype.Component;
 
 
@@ -16,6 +18,7 @@ public class UserDevice implements WeatherObserver {
     private final NotificationService notificationService;
 
     @Override
+    @Transactional
     public void updateWeather(SavedDailyWeatherEntity weather) {
         notificationRulesService.getNotificationRules().forEach(rule -> {
             boolean isCold = rule.getMinTemp() != null && weather.getTempMin() < rule.getMinTemp();
@@ -29,10 +32,6 @@ public class UserDevice implements WeatherObserver {
                     notificationService.send(user, weather);
                 });
             }
-
-
         });
-
-
     }
 }

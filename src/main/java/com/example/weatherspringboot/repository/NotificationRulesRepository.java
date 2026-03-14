@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface NotificationRulesRepository extends JpaRepository<NotificationRulesEntity, UUID> {
-   NotificationRulesEntity findByEmail(String email);
+
 }

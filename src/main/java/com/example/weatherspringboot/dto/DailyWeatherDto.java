@@ -1,11 +1,13 @@
 package com.example.weatherspringboot.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 public class DailyWeatherDto {
     private List<String> time;
     @JsonProperty("weather_code")

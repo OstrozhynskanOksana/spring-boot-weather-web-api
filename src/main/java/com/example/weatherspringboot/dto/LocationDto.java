@@ -1,8 +1,10 @@
 package com.example.weatherspringboot.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class LocationDto {
     private Double latitude;
     private Double longitude;

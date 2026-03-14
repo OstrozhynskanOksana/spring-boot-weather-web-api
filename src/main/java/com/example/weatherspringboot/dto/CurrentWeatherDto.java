@@ -1,12 +1,14 @@
 package com.example.weatherspringboot.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class CurrentWeatherDto {
     private String time;
-    private Integer interval; //інтервал наступного запиту
+    private Integer interval;
     @JsonProperty("temperature_2m")
     private Double temperature;
     @JsonProperty("relative_humidity_2m")

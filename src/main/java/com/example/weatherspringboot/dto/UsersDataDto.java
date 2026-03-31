@@ -12,6 +12,10 @@ public class UsersDataDto {
     private Long id;
 
     @NotBlank(message = "The field cannot be empty")
+    @Size(max = 100)
+    private String username;
+
+    @NotBlank(message = "The field cannot be empty")
     @Email(message = "The email contains invalid characters")
     private String email;
 

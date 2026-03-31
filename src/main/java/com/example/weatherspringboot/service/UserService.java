@@ -21,9 +21,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserEntity saveUser(UserEntity user) {
-        return userRepository.save(user);
-    }
     public UserEntity findById(UUID id) {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User is not found"));
     }
@@ -35,6 +32,7 @@ public class UserService {
     public UserEntity register(UsersDataDto usersData) {
         try {
             var users = new UserEntity();
+            users.setUsername(usersData.getUsername());
             users.setEmail(usersData.getEmail());
             String encodedPassword = passwordEncoder.encode(usersData.getPassword());
             users.setPassword(encodedPassword);

@@ -1,5 +1,6 @@
 package com.example.weatherspringboot.service;
 import com.example.weatherspringboot.entity.UserEntity;
+import com.example.weatherspringboot.record.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

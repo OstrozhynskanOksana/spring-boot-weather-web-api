@@ -18,6 +18,9 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(nullable = false, length = 60)
+    private String username;
+
     @Column(unique = true, nullable = false, length = 30)
     private String email;
 

@@ -1,4 +1,4 @@
-package com.example.weatherspringboot.service;
+package com.example.weatherspringboot.record;
 
 import com.example.weatherspringboot.entity.UserEntity;
 

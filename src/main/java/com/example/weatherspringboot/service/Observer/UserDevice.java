@@ -4,6 +4,7 @@ package com.example.weatherspringboot.service.Observer;
 import com.example.weatherspringboot.entity.SavedDailyWeatherEntity;
 import com.example.weatherspringboot.service.NotificationRulesService;
 import com.example.weatherspringboot.service.NotificationService;
+import com.example.weatherspringboot.service.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 public class UserDevice implements WeatherObserver {
     private final NotificationRulesService notificationRulesService;
     private final NotificationService notificationService;
+    private final UserService userService;
 
     @Override
     @Transactional
@@ -29,6 +31,7 @@ public class UserDevice implements WeatherObserver {
 
             if (isCold || isHot || isRaining) {
                 rule.getUsers().forEach(user -> {
+                    if(user.getCurrentLocation() == weather.getLocation()) {}
                     notificationService.send(user, weather);
                 });
             }

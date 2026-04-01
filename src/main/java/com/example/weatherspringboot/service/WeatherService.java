@@ -28,6 +28,8 @@ public class WeatherService {
         return apiClient.getWeatherResponse(dataGeoResponse.getLatitude(), dataGeoResponse.getLongitude());
     }
 
+
+
     @Scheduled(cron = "0 */15 * * * *")
     @Transactional
     public void updatedDataForWeather(){
@@ -42,12 +44,14 @@ public class WeatherService {
                 return;
             }
 
-            LocalDate date = LocalDate.parse(daily.getTime().getFirst());
-            if(savedDailyWeatherRepository.existsSavedWeatherDayBy(location, date)){
+            LocalDate time = LocalDate.parse(daily.getTime().getFirst());
+            if(savedDailyWeatherRepository.existsSavedWeatherDayBy(location, time)){
                 return;
             }
 
             SavedDailyWeatherEntity entity = new SavedDailyWeatherEntity();
+            entity.setLocation(location);
+            entity.setTime(time);
             entity.setWeatherCodes(daily.getWeatherCodes().getFirst());
             entity.setTempMax(daily.getTempMax().getFirst());
             entity.setTempMin(daily.getTempMin().getFirst());

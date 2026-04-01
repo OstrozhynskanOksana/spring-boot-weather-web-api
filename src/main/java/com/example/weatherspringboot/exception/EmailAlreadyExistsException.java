@@ -1,4 +1,4 @@
-package com.example.weatherspringboot.service;
+package com.example.weatherspringboot.exception;
 
 public class EmailAlreadyExistsException extends RuntimeException {
     public EmailAlreadyExistsException(String message) {

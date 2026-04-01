@@ -1,6 +1,7 @@
 package com.example.weatherspringboot.controller;
 
-import com.example.weatherspringboot.service.EmailAlreadyExistsException;
+import com.example.weatherspringboot.exception.EmailAlreadyExistsException;
+import com.example.weatherspringboot.exception.LocationIsNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -32,5 +33,10 @@ public class AdviceController {
         Map<String, String> errors = new HashMap<>();
         errors.put("email", exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
+    @ExceptionHandler(LocationIsNotFoundException.class)
+    public ResponseEntity<String> handleLocationIsNotFound(LocationIsNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
     }
 }

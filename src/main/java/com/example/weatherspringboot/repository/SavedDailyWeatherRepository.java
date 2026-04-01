@@ -9,5 +9,5 @@ import java.util.UUID;
 
 
 public interface SavedDailyWeatherRepository extends JpaRepository<SavedDailyWeatherEntity, UUID> {
-    boolean existsSavedWeatherDayBy(LocationEntity location, LocalDate date);
+    boolean existsSavedWeatherDayBy(LocationEntity location, LocalDate time);
 }

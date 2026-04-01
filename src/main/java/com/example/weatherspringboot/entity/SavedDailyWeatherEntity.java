@@ -33,6 +33,8 @@ public class SavedDailyWeatherEntity {
 
     private Double rainSum;
 
-
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private LocationEntity location;
 
 }

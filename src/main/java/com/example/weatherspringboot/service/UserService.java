@@ -3,6 +3,8 @@ package com.example.weatherspringboot.service;
 import com.example.weatherspringboot.Role;
 import com.example.weatherspringboot.dto.UsersDataDto;
 import com.example.weatherspringboot.entity.UserEntity;
+import com.example.weatherspringboot.exception.EmailAlreadyExistsException;
+import com.example.weatherspringboot.repository.LocationRepository;
 import com.example.weatherspringboot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +23,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    public UserEntity save(UserEntity userEntity) {
+        return userRepository.save(userEntity);
+
+    }
     public UserEntity findById(UUID id) {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User is not found"));
     }
 
     public UserEntity findByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(String.format("User is not found: %s", email)));
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User is not found: %s", email)));
     }
 
     public UserEntity register(UsersDataDto usersData) {

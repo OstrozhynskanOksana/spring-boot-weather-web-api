@@ -1,4 +1,4 @@
-package com.example.weatherspringboot;
+package com.example.weatherspringboot.config;
 
 import com.example.weatherspringboot.service.JwtService;
 import jakarta.servlet.FilterChain;

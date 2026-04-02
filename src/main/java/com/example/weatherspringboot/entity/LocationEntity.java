@@ -18,12 +18,11 @@ public class LocationEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String cityName;
+    private String city;
     private Double latitude;
     private Double longitude;
 
     @OneToMany(mappedBy = "currentLocation")
     private List<UserEntity> users;
-
 
 }

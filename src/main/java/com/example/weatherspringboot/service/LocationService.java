@@ -22,12 +22,12 @@ public class LocationService {
         UserEntity user = userService.findByEmail(email);
 
 
-        LocationEntity location = locationRepository.findByCityName(city)
+        LocationEntity location = locationRepository.findByCity(city)
                 .orElseGet(() -> {
                     LocationDto geo = apiClient.getGeoResponse(city);
 
                     LocationEntity newLocation = new LocationEntity();
-                    newLocation.setCityName(city);
+                    newLocation.setCity(city);
                     newLocation.setLatitude(geo.getLatitude());
                     newLocation.setLongitude(geo.getLongitude());
 

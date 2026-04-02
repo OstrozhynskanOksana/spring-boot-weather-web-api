@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface LocationRepository extends JpaRepository<LocationEntity, UUID> {
-    Optional<LocationEntity> findByCityName(String city);
+    Optional<LocationEntity> findByCity(String city);
 }

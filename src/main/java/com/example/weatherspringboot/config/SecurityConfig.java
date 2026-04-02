@@ -1,6 +1,5 @@
 package com.example.weatherspringboot.config;
 
-import com.example.weatherspringboot.JwtFilter;
 import com.example.weatherspringboot.service.CustomAccessDeniedHandler;
 import com.example.weatherspringboot.service.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +14,6 @@ import org.springframework.security.config.annotation.web.configurers.CorsConfig
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @Configuration

@@ -32,24 +32,42 @@ public class UserService {
     }
 
     public UserEntity findByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("User is not found: %s", email)));
+        String normalizedEmail = normalizeEmail(email);
+        return userRepository.findByNormalizedEmail(normalizedEmail)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User is not found: %s", normalizedEmail)));
+    }
+
+    public boolean passwordMatches(UserEntity user, String rawPassword) {
+        return passwordEncoder.matches(rawPassword, user.getPassword());
     }
 
     public UserEntity register(UsersDataDto usersData) {
         try {
+            String normalizedEmail = normalizeEmail(usersData.getEmail());
+            if (userRepository.findByNormalizedEmail(normalizedEmail).isPresent()) {
+                throw new EmailAlreadyExistsException("The email is already in use");
+            }
+
             var users = new UserEntity();
             users.setUsername(usersData.getUsername());
-            users.setEmail(usersData.getEmail());
+            users.setEmail(normalizedEmail);
             String encodedPassword = passwordEncoder.encode(usersData.getPassword());
             users.setPassword(encodedPassword);
             users.setRole(Role.USER);
 
             return userRepository.save(users);
         } catch (DataIntegrityViolationException ex) {
-            log.warn("Attempt to register duplicate email: {}", usersData.getEmail());
-            throw new EmailAlreadyExistsException("The email is already in use");
+            String normalizedEmail = normalizeEmail(usersData.getEmail());
+            if (userRepository.findByNormalizedEmail(normalizedEmail).isPresent()) {
+                log.warn("Attempt to register duplicate email: {}", normalizedEmail);
+                throw new EmailAlreadyExistsException("The email is already in use");
+            }
+            throw ex;
         }
+    }
+
+    private String normalizeEmail(String email) {
+        return email == null ? null : email.trim().toLowerCase();
     }
 
 }

@@ -72,17 +72,17 @@ class UserServiceTest {
         UserEntity user = new UserEntity();
         user.setEmail("test@test.com");
 
-        when(userRepository.findByEmail("test@test.com")).thenReturn(Optional.of(user));
+        when(userRepository.findByNormalizedEmail("test@test.com")).thenReturn(Optional.of(user));
 
         UserEntity result = userService.findByEmail("test@test.com");
 
         assertEquals("test@test.com", result.getEmail());
-        verify(userRepository).findByEmail("test@test.com");
+        verify(userRepository).findByNormalizedEmail("test@test.com");
     }
 
     @Test
     void findByEmail_shouldThrow_whenUserNotFound() {
-        when(userRepository.findByEmail("test@test.com")).thenReturn(Optional.empty());
+        when(userRepository.findByNormalizedEmail("test@test.com")).thenReturn(Optional.empty());
 
         UsernameNotFoundException ex = assertThrows(
                 UsernameNotFoundException.class,
@@ -96,9 +96,10 @@ class UserServiceTest {
     void register_shouldEncodePasswordAndSaveUser() {
         UsersDataDto dto = new UsersDataDto();
         dto.setUsername("oksana");
-        dto.setEmail("test@test.com");
+        dto.setEmail(" Test@Test.com ");
         dto.setPassword("password123");
 
+        when(userRepository.findByNormalizedEmail("test@test.com")).thenReturn(Optional.empty());
         when(passwordEncoder.encode("password123")).thenReturn("encoded-password");
 
         UserEntity savedUser = new UserEntity();
@@ -125,15 +126,31 @@ class UserServiceTest {
     }
 
     @Test
-    void register_shouldThrowEmailAlreadyExistsException_whenDuplicateEmail() {
+    void register_shouldPropagateDataIntegrityViolation_whenEmailDoesNotExistAfterSaveFailure() {
         UsersDataDto dto = new UsersDataDto();
         dto.setUsername("oksana");
         dto.setEmail("test@test.com");
         dto.setPassword("password123");
 
+        when(userRepository.findByNormalizedEmail("test@test.com")).thenReturn(Optional.empty());
         when(passwordEncoder.encode("password123")).thenReturn("encoded-password");
         when(userRepository.save(any(UserEntity.class)))
                 .thenThrow(new DataIntegrityViolationException("duplicate"));
+
+        assertThrows(
+                DataIntegrityViolationException.class,
+                () -> userService.register(dto)
+        );
+    }
+
+    @Test
+    void register_shouldThrowEmailAlreadyExistsException_whenNormalizedEmailAlreadyExists() {
+        UsersDataDto dto = new UsersDataDto();
+        dto.setUsername("oksana");
+        dto.setEmail(" Test@Test.com ");
+        dto.setPassword("password123");
+
+        when(userRepository.findByNormalizedEmail("test@test.com")).thenReturn(Optional.of(new UserEntity()));
 
         EmailAlreadyExistsException ex = assertThrows(
                 EmailAlreadyExistsException.class,
@@ -141,5 +158,6 @@ class UserServiceTest {
         );
 
         assertEquals("The email is already in use", ex.getMessage());
+        verify(userRepository, never()).save(any(UserEntity.class));
     }
 }

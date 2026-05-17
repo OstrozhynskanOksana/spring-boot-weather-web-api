@@ -4,6 +4,8 @@ import com.example.weatherspringboot.exception.EmailAlreadyExistsException;
 import com.example.weatherspringboot.exception.LocationIsNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -38,5 +40,12 @@ public class AdviceController {
     @ExceptionHandler(LocationIsNotFoundException.class)
     public ResponseEntity<String> handleLocationIsNotFound(LocationIsNotFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    }
+
+    @ExceptionHandler({UsernameNotFoundException.class, BadCredentialsException.class})
+    public ResponseEntity<Map<String, String>> handleAuthenticationFailure(RuntimeException exception) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", "Invalid email or password");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errors);
     }
 }

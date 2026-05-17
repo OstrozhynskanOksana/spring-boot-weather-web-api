@@ -8,6 +8,7 @@ import com.example.weatherspringboot.entity.LocationEntity;
 import com.example.weatherspringboot.entity.SavedDailyWeatherEntity;
 import com.example.weatherspringboot.repository.LocationRepository;
 import com.example.weatherspringboot.repository.SavedDailyWeatherRepository;
+import com.example.weatherspringboot.service.Observer.WeatherStation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -17,6 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -32,6 +35,9 @@ class WeatherServiceTest {
 
     @Mock
     private SavedDailyWeatherRepository savedDailyWeatherRepository;
+
+    @Mock
+    private WeatherStation weatherStation;
 
     @InjectMocks
     private WeatherService weatherService;
@@ -79,8 +85,10 @@ class WeatherServiceTest {
 
         when(locationRepository.findAll()).thenReturn(List.of(location));
         when(apiClient.getWeatherResponse(50.45, 30.52)).thenReturn(weatherResponse);
-        when(savedDailyWeatherRepository.existsSavedWeatherDayBy(location, LocalDate.parse("2026-04-02")))
-                .thenReturn(false);
+        when(savedDailyWeatherRepository.findByLocationAndTime(location, LocalDate.parse("2026-04-02")))
+                .thenReturn(Optional.empty());
+        when(savedDailyWeatherRepository.save(any(SavedDailyWeatherEntity.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
 
         weatherService.updatedDataForWeather();
 
@@ -88,6 +96,7 @@ class WeatherServiceTest {
                 ArgumentCaptor.forClass(SavedDailyWeatherEntity.class);
 
         verify(savedDailyWeatherRepository).save(captor.capture());
+        verify(weatherStation).notifyObservers(any(SavedDailyWeatherEntity.class));
 
         SavedDailyWeatherEntity saved = captor.getValue();
         assertEquals(LocalDate.parse("2026-04-02"), saved.getTime());
@@ -121,10 +130,23 @@ class WeatherServiceTest {
     }
 
     @Test
-    void updatedDataForWeather_shouldNotSave_whenWeatherAlreadyExists() {
+    void updatedDataForWeather_shouldNotSave_whenExistingWeatherIsUnchanged() {
         LocationEntity location = new LocationEntity();
         location.setLatitude(50.45);
         location.setLongitude(30.52);
+        location.setCity("Kyiv");
+
+        SavedDailyWeatherEntity existing = new SavedDailyWeatherEntity();
+        existing.setId(UUID.randomUUID());
+        existing.setLocation(location);
+        existing.setTime(LocalDate.parse("2026-04-02"));
+        existing.setWeatherCodes(3);
+        existing.setTempMax(18.0);
+        existing.setTempMin(8.0);
+        existing.setSunrise("06:20");
+        existing.setSunset("19:35");
+        existing.setUvMax(4.5);
+        existing.setRainSum(0.7);
 
         DailyWeatherDto daily = new DailyWeatherDto();
         daily.setTime(List.of("2026-04-02"));
@@ -141,11 +163,12 @@ class WeatherServiceTest {
 
         when(locationRepository.findAll()).thenReturn(List.of(location));
         when(apiClient.getWeatherResponse(50.45, 30.52)).thenReturn(weatherResponse);
-        when(savedDailyWeatherRepository.existsSavedWeatherDayBy(location, LocalDate.parse("2026-04-02")))
-                .thenReturn(true);
+        when(savedDailyWeatherRepository.findByLocationAndTime(location, LocalDate.parse("2026-04-02")))
+                .thenReturn(Optional.of(existing));
 
         weatherService.updatedDataForWeather();
 
         verify(savedDailyWeatherRepository, never()).save(any(SavedDailyWeatherEntity.class));
+        verify(weatherStation, never()).notifyObservers(any(SavedDailyWeatherEntity.class));
     }
 }

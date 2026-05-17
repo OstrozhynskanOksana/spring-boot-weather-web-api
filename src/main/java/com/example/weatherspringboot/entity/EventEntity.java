@@ -24,6 +24,8 @@ public class EventEntity {
     @Column(length = 30)
     private String title;
 
+    private String time;
+
     private String description;
 
 

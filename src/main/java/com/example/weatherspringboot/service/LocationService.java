@@ -22,7 +22,15 @@ public class LocationService {
         UserEntity user = userService.findByEmail(email);
 
 
-        LocationEntity location = locationRepository.findByCity(city)
+        LocationEntity location = getOrCreateLocation(city);
+
+        user.setCurrentLocation(location);
+        userService.save(user);
+    }
+
+    @Transactional
+    public LocationEntity getOrCreateLocation(String city) {
+        return locationRepository.findByCity(city)
                 .orElseGet(() -> {
                     LocationDto geo = apiClient.getGeoResponse(city);
 
@@ -33,8 +41,5 @@ public class LocationService {
 
                     return locationRepository.save(newLocation);
                 });
-
-        user.setCurrentLocation(location);
-        userService.save(user);
     }
 }
